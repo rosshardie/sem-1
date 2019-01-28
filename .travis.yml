@@ -4,6 +4,7 @@ dist: trusty
 
 services:
   - mysql
+  - docker
 
 before_script:
   # Set up MySQL
