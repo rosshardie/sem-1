@@ -30,7 +30,7 @@ Unacceptable Behaviour which will go against our pledge:
 
 **Our Responsibilities:**
 
-We, as project maintainer, have the responsibility of upholding these standards of behaviour and are expected to carry out appropriate corrective actions in the instances where unacceptable behaviour has occurred. We have the right to remove and edit comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct. As well as the right to ban individuals who have contributed for behaviour which is deemed inappropriate.
+We, as project maintainers, have the responsibility of upholding these standards of behaviour and are expected to carry out appropriate corrective actions in the instances where unacceptable behaviour has occurred. We have the right to remove and edit comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct. As well as the right to ban individual contributers for behaviour which is deemed inappropriate.
 
 **Scope:**
 
