@@ -9,12 +9,12 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AppTest {
-    static App app;
+public class ReportTest {
+    static Report report;
 
     @BeforeAll
     static void init() {
-        app = new App();
+        report = new Report();
     }
 
     @Ignore
