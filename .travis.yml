@@ -16,7 +16,7 @@ before_script:
 
 script:
   - # Install database data
-  - mysql -u root -D world -v -e "source db/world.sql"
+  - mysql -u root -D world -v -e "source db/world.sql" >/dev/null 2>&1
 
 after_success:
   - docker-compose up -d
