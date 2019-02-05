@@ -21,4 +21,5 @@ script:
   - mvn test
 
 after_success:
+  # For testing purposes, this should be removed later
   - docker-compose up --build -d
