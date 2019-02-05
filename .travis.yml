@@ -19,4 +19,4 @@ script:
   - mysql -u root -D world -v -e "source db/world.sql" >/dev/null 2>&1
 
 after_success:
-  - docker-compose up -d
+  - docker-compose up --build -d
