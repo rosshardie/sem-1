@@ -177,7 +177,6 @@ public class ReportTest {
     void populationReport() {
     }
 
-    @Ignore
     void getCountryList() {
 
     }
