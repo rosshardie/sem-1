@@ -5,8 +5,8 @@ FROM mysql
 WORKDIR /tmp
 
 # Copy all the files to the working directory of the container
-COPY world/*.sql /tmp/
-COPY world/*.dump /tmp/
+COPY db/world/*.sql /tmp/
+COPY db/world/*.dump /tmp/
 
 # Copy the main SQL file to docker-entrypoint-initdb.d.
 COPY db/world.sql /docker-entrypoint-initdb.d
