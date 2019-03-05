@@ -13,8 +13,6 @@ public class App {
 //        App a = new App();
 //
 //        a.connect();
-
-        ReportGenerator.mainForm();
     }
 
     /**
