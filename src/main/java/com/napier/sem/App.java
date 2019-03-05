@@ -10,9 +10,9 @@ public class App {
     private Connection con = null;
 
     public static void main(String[] args) {
-//        App a = new App();
-//
-//        a.connect();
+        App a = new App();
+
+        a.connect();
     }
 
     /**
