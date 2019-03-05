@@ -10,9 +10,11 @@ public class App {
     private Connection con = null;
 
     public static void main(String[] args) {
-        App a = new App();
+//        App a = new App();
+//
+//        a.connect();
 
-        a.connect();
+        ReportGenerator.mainForm();
     }
 
     /**

@@ -14,5 +14,12 @@ before_script:
   - mysql -u root -e "CREATE USER 'world'@'localhost' IDENTIFIED BY 'world';"
   - mysql -u root -e "GRANT ALL PRIVILEGES ON world.* TO 'world'@'localhost';"
 
+script:
+  # Install database data
+  - mysql -u root -D world -v -e "source db/world.sql" >/dev/null 2>&1
+  # Run unit tests
+  - mvn test
+
 after_success:
-  - docker-compose up -d
+  # For testing purposes, this should be removed later
+  - docker-compose up --build -d
