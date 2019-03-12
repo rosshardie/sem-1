@@ -1,6 +1,5 @@
 package com.napier.sem;
 
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -18,167 +17,102 @@ public class TestReport {
     }
 
     @Test
-    void worldCountriesByPopulation() {
+    void worldCountriesByPopulationLS() {
     }
 
     @Test
-    void continentCountriesByPopulation() {
+    void continentCountriesByPopulationLS() {
     }
 
     @Test
-    void regionCountriesByPopulation() {
+    void regionCountriesByPopulationLS() {
     }
 
     @Test
-    void worldHighestPopulationCountries() {
+    void worldCountriesTopN() {
     }
 
     @Test
-    void continentHighestPopulationCountries() {
+    void continentCountriesTopN() {
     }
 
     @Test
-    void regionHighestPopulationCountries() {
+    void regionCountriesTopN() {
     }
 
     @Test
-    void worldCitiesByPopulation() {
+    void worldCitiesByPopulationLS() {
     }
 
     @Test
-    void continentCitiesByPopulation() {
+    void continentCitiesByPopulationLS() {
     }
 
     @Test
-    void regionCitiesByPopulation() {
+    void regionCitiesByPopulationLS() {
     }
 
     @Test
-    void countryCitiesByPopulation() {
+    void countryCitiesByPopulationLS() {
     }
 
     @Test
-    void districtCitiesByPopulation() {
+    void districtCitiesByPopulationLS() {
     }
 
     @Test
-    void worldHighestPopulationCities() {
+    void worldCitiesTopN() {
     }
 
     @Test
-    void continentHighestPopulationCities() {
+    void continentCitiesTopN() {
     }
 
     @Test
-    void regionHighestPopulationCities() {
+    void regionCitiesTopN() {
     }
 
     @Test
-    void countryHighestPopulationCities() {
+    void countryCitiesTopN() {
     }
 
     @Test
-    void districtHighestPopulationCities() {
+    void districtCitiesTopN() {
     }
 
     @Test
-    void worldCapitalsByPopulation() {
+    void worldCapitalsByPopulationLS() {
     }
 
     @Test
-    void ContinentCapitalsByPopulation() {
+    void continentCapitalsByPopulationLS() {
     }
 
     @Test
-    void RegionCapitalsByPopulation() {
+    void regionCapitalsByPopulationLS() {
     }
 
     @Test
-    void worldHighestPopulationCapitals() {
+    void worldCapitalsTopN() {
     }
 
     @Test
-    void continentHighestPopulationCapitals() {
+    void continentCapitalsTopN() {
     }
 
     @Test
-    void regionHighestPopulationCapitals() {
+    void regionCapitalsTopN() {
     }
 
     @Test
-    void continentCityPopulation() {
+    void continentPopulationCitiesandRural() {
     }
 
     @Test
-    void continentRuralPopulation() {
+    void regionPopulationCitiesandRural() {
     }
 
     @Test
-    void regionCityPopulation() {
-    }
-
-    @Test
-    void regionRuralPopulation() {
-    }
-
-    @Test
-    void countryCityPopulation() {
-    }
-
-    @Test
-    void countryRuralPopulation() {
-    }
-
-    @Test
-    void worldPopulation() {
-    }
-
-    @Test
-    void continentPopulation() {
-    }
-
-    @Test
-    void regionPopulation() {
-    }
-
-    @Test
-    void countryPopulation() {
-    }
-
-    @Test
-    void districtPopulation() {
-    }
-
-    @Test
-    void cityPopulation() {
-    }
-
-    @Test
-    void languageUsagePopulation() {
-    }
-
-    @Test
-    void worldLanguageUsagePercentage() {
-    }
-
-    @Test
-    void countryReport() {
-    }
-
-    @Test
-    void cityReport() {
-    }
-
-    @Test
-    void capitalCityReport() {
-    }
-
-    @Test
-    void populationReport() {
-    }
-
-    @Test
-    void getCountryList() {
-
+    void countryPopulationCitiesandRural() {
     }
 }
