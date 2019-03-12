@@ -17,7 +17,7 @@ public class Country {
     /**
      * Country Continent
      */
-    public Enum Continent;
+    public String Continent;
 
     /**
      * Country Region

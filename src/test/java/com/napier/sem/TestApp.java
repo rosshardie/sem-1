@@ -14,7 +14,8 @@ class TestApp {
     }
 
     @Test
-    void getCountries() {
+    void printCountriesNullTest() {
+        app.printCountries(null);
     }
 
     @Test
@@ -50,7 +51,8 @@ class TestApp {
     }
 
     @Test
-    void worldCountriesByPopulationLS() {
+    void worldCountriesByPopulationLSNullTest() {
+        app.worldCountriesByPopulationLS();
     }
 
     @Test
