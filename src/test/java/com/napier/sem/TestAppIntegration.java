@@ -20,5 +20,6 @@ class TestAppIntegration {
 
     @Test
     void worldCountriesByPopulationLS() {
+        app.worldCountriesByPopulationLS();
     }
 }

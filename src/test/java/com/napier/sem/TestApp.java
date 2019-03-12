@@ -51,11 +51,6 @@ class TestApp {
     }
 
     @Test
-    void worldCountriesByPopulationLSNullTest() {
-        app.worldCountriesByPopulationLS();
-    }
-
-    @Test
     void continentCountriesByPopulationLS() {
     }
 
