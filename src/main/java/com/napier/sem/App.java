@@ -52,13 +52,17 @@ public class App {
      * @param countries countries to print.
      */
     void printCountries(ArrayList<Country> countries) {
-        System.out.println(String.format("%-10s %-15s %-20s", "Name", "Continent", "Population"));
+        if (countries != null) {
+            System.out.println(String.format("%-10s %-15s %-20s", "Name", "Continent", "Population"));
 
-        for (Country country : countries) {
-            String formatted_string =
-                    String.format("%-10s %-15s %-20s",
-                            country.Name, country.Continent, country.Population);
-            System.out.println(formatted_string);
+            for (Country country : countries) {
+                String formatted_string =
+                        String.format("%-10s %-15s %-20s",
+                                country.Name, country.Continent, country.Population);
+                System.out.println(formatted_string);
+            }
+        } else {
+            System.out.println("No countries");
         }
     }
 
