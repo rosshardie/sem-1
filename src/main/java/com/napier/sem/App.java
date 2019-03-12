@@ -9,17 +9,29 @@ public class App {
      */
     private Connection con = null;
 
+    /**
+     * Connect to database and run report.
+     * @param args string
+     */
     public static void main(String[] args) {
         App a = new App();
 
-        a.connect();
+        // Connect to DB
+        if (args.length < 1) {
+            a.connect("localhost:3306");
+        } else {
+            a.connect(args[0]);
+        }
+
+        // Disconnect DB
         a.disconnect();
     }
 
     /**
      * Connect to the MySQL database.
+     * @param location string
      */
-    private void connect() {
+    void connect(String location) {
         try {
             // Load Database driver
             Class.forName("com.mysql.jdbc.Driver");
@@ -35,7 +47,7 @@ public class App {
                 // Wait a bit for db to start
                 Thread.sleep(30000);
                 // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql://db:3306/world?useSSL=false", "root", "mysql");
+                con = DriverManager.getConnection("jdbc:mysql://" + location + "/world?allowPublicKeyRetrieval=true&useSSL=false", "root", "mysql");
                 System.out.println("Successfully connected");
                 break;
             } catch (SQLException sqle) {
@@ -50,7 +62,7 @@ public class App {
     /**
      * Disconnect from the MySQL database.
      */
-    public void disconnect() {
+    private void disconnect() {
         if (con != null) {
             try {
                 // Close connection
