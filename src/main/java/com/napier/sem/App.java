@@ -100,8 +100,10 @@ public class App {
     void printCountries(ArrayList<Country> countries) {
         if (countries != null) {
             System.out.println(String.format("%-10s %-15s %-20s", "Name", "Continent", "Population"));
-
             for (Country country : countries) {
+                if (country == null) {
+                    continue;
+                }
                 String formatted_string =
                         String.format("%-10s %-15s %-20s",
                                 country.Name, country.Continent, country.Population);
