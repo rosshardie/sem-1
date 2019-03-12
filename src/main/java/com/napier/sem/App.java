@@ -176,10 +176,7 @@ public class App {
     ArrayList<Country> worldCountriesByPopulationLS() {
         try {
             DatabaseManager db = new DatabaseManager();
-            String query =
-                    "SELECT Name, Continent, Population "
-                            + "FROM country "
-                            + "ORDER BY Population DESC";
+            String query = "SELECT Name FROM country";
 
             ResultSet results = db.query(query);
             ArrayList<Country> countries = new ArrayList<Country>();
