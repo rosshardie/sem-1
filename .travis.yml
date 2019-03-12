@@ -1,18 +1,44 @@
 language: java
 
-sudo: required
+sudo: false
 
-dist: trusty
+addons:
+  hosts:
+    - db
 
 services:
-  - mysql
   - docker
 
+install:
+  - docker build -t database db/.
+  - docker run --rm -d -e MYSQL_ROOT_PASSWORD=mysql -p 33060:3306 database
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+
 before_script:
-  # Set up MySQL
-  - mysql -e "CREATE DATABASE world CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;"
-  - mysql -u root -e "CREATE USER 'world'@'localhost' IDENTIFIED BY 'world';"
-  - mysql -u root -e "GRANT ALL PRIVILEGES ON world.* TO 'world'@'localhost';"
+  - mvn clean
+
+jobs:
+  include:
+    - stage: unit tests
+      install: skip
+      jdk: oraclejdk11
+      script: mvn test -Dtest=com.napier.sem.TestApp
+    - stage: integration tests
+      jdk: oraclejdk11
+      script: mvn test -Dtest=com.napier.sem.TestAppIntegration
+    - stage: Release
+      install: skip
+      jdk: oraclejdk11
+      script:
+        - mvn package -DskipTests=true -Dmaven.javadoc.skip=true
+        - docker-compose up --abort-on-container-exit
+
+stages:
+  - unit tests
+  - integration tests
+  - name: Release
+    if: branch = master
 
 after_success:
-  - docker-compose up -d
+  - bash <(curl -s https://codecov.io/bash)
+  - docker-compose up --abort-on-container-exit
