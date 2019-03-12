@@ -39,6 +39,11 @@ public class App {
         String continent = "Asia";
         ArrayList<Country> continentCountries = this.continentCountriesByPopulationLS(continent);
         this.printCountries(continentCountries);
+
+        System.out.println("All the countries in a region organised by largest population to smallest.\n:\n");
+        String region = "Middle East";
+        ArrayList<Country> regionCountries = this.regionCountriesByPopulationLS(region);
+        this.printCountries(continentCountries);
     }
 
     /**
@@ -178,10 +183,33 @@ public class App {
     /**
      * All the countries in a region organised by largest population to smallest.
      *
-     * @return
+     * @return countries
      */
-    public ArrayList<Country> regionCountriesByPopulationLS() {
-        return null;
+    ArrayList<Country> regionCountriesByPopulationLS(String region) {
+        try {
+            DatabaseManager db = new DatabaseManager();
+            ArrayList<Country> countries = new ArrayList<Country>();
+            String query =
+                    "SELECT Name, Continent, Population "
+                            + "FROM country "
+                            + "WHERE Region = '" + region + "' "
+                            + "ORDER BY Population DESC  ";
+            ResultSet results = db.query(query);
+            while (results.next()) {
+                Country country = new Country();
+                country.Code = results.getString("Code");
+                country.Name = results.getString("Name");
+                country.Continent = results.getString("Continent");
+                country.Region = results.getString("Region");
+                country.Population = results.getInt("Population");
+                countries.add(country);
+            }
+            return countries;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to fetch country");
+            return null;
+        }
     }
 
     /**
