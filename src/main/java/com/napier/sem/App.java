@@ -1,75 +1,354 @@
 package com.napier.sem;
 
+import java.util.ArrayList;
 import java.sql.*;
 
 public class App {
 
     /**
-     * Connection to MySQL database.
-     */
-    private Connection con = null;
-
-    /**
      * Connect to database and run report.
+     *
      * @param args string
      */
     public static void main(String[] args) {
+        DatabaseManager db = new DatabaseManager();
         App a = new App();
 
         // Connect to DB
         if (args.length < 1) {
-            a.connect("localhost:3306");
+            db.connect("localhost:33060");
         } else {
-            a.connect(args[0]);
+            db.connect(args[0]);
         }
+        // Main report
+        a.mainReport();
 
         // Disconnect DB
-        a.disconnect();
+        db.disconnect();
     }
 
     /**
-     * Connect to the MySQL database.
-     * @param location string
+     * Runs the main report
      */
-    void connect(String location) {
+    private void mainReport() {
+        System.out.println("All countries by population from largest to smallest:\n");
+        ArrayList<Country> countries = this.worldCountriesByPopulationLS();
+        this.printCountries(countries);
+    }
+
+    /**
+     * Prints countries.
+     *
+     * @param countries countries to print.
+     */
+    private void printCountries(ArrayList<Country> countries) {
+        System.out.println(String.format("%-10s %-15s %-20s", "Name", "Continent", "Population"));
+
+        for (Country country : countries) {
+            String formatted_string =
+                    String.format("%-10s %-15s %-20s",
+                            country.Name, country.Continent, country.Population);
+            System.out.println(formatted_string);
+        }
+    }
+
+    /**
+     * The population of the world.
+     *
+     * @return
+     */
+    public ArrayList<Country> worldPopulation() {
+        return null;
+    }
+
+    /**
+     * The population of a continent.
+     *
+     * @return
+     */
+    public ArrayList<Country> continentPopulation(String continent) {
+        return null;
+    }
+
+    /**
+     * The population of a region.
+     *
+     * @return
+     */
+    public ArrayList<Country> regionPopulation(String region) {
+        return null;
+    }
+
+    /**
+     * The population of a country.
+     *
+     * @return
+     */
+    public ArrayList<Country> countryPopulation(String country) {
+        return null;
+    }
+
+    /**
+     * The population of a district.
+     *
+     * @return
+     */
+    public ArrayList<Country> districtPopulation(String district) {
+        return null;
+    }
+
+    /**
+     * The population of a city.
+     *
+     * @return
+     */
+    public ArrayList<Country> cityPopulation(String city) {
+        return null;
+    }
+
+    /**
+     * All the countries in the world organised by largest population to smallest.
+     *
+     * @return countries
+     */
+    private ArrayList<Country> worldCountriesByPopulationLS() {
         try {
-            // Load Database driver
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            System.out.println("Could not load SQL driver");
-            System.exit(-1);
-        }
+            DatabaseManager db = new DatabaseManager();
+            String query =
+                    "SELECT Name, Continent, Population "
+                            + "FROM country "
+                            + "ORDER BY Population DESC";
 
-        int retries = 10;
-        for (int i = 0; i < retries; ++i) {
-            System.out.println("Connecting to database...");
-            try {
-                // Wait a bit for db to start
-                Thread.sleep(30000);
-                // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql://" + location + "/world?allowPublicKeyRetrieval=true&useSSL=false", "root", "mysql");
-                System.out.println("Successfully connected");
-                break;
-            } catch (SQLException sqle) {
-                System.out.println("Failed to connect to database attempt " + i);
-                System.out.println(sqle.getMessage());
-            } catch (InterruptedException ie) {
-                System.out.println("Thread interrupted? Should not happen.");
+            ResultSet results = db.query(query);
+            ArrayList<Country> countries = new ArrayList<Country>();
+            while (results.next()) {
+                Country country = new Country();
+                country.Code = results.getString("Code");
+                country.Name = results.getString("Name");
+                country.Population = results.getInt("Population");
+                countries.add(country);
             }
+            return countries;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get details");
+            return null;
         }
     }
 
     /**
-     * Disconnect from the MySQL database.
+     * All the countries in a continent organised by largest population to smallest.
+     *
+     * @return
      */
-    private void disconnect() {
-        if (con != null) {
-            try {
-                // Close connection
-                con.close();
-            } catch (Exception e) {
-                System.out.println("Error closing connection to database");
-            }
-        }
+    public ArrayList<Country> continentCountriesByPopulationLS() {
+        return null;
+    }
+
+    /**
+     * All the countries in a region organised by largest population to smallest.
+     *
+     * @return
+     */
+    public ArrayList<Country> regionCountriesByPopulationLS() {
+        return null;
+    }
+
+    /**
+     * The top N populated countries in the world where N is provided by the user.
+     *
+     * @return
+     */
+    public ArrayList<Country> worldCountriesTopN(int n) {
+        return null;
+    }
+
+    /**
+     * The top N populated countries in a continent where N is provided by the user.
+     *
+     * @return
+     */
+    public ArrayList<Country> continentCountriesTopN(int n) {
+        return null;
+    }
+
+    /**
+     * The top N populated countries in a region where N is provided by the user.
+     *
+     * @return
+     */
+    public ArrayList<Country> regionCountriesTopN(int n) {
+        return null;
+    }
+
+    /**
+     * All the cities in the world organised by largest population to smallest.
+     *
+     * @return
+     */
+    public ArrayList<City> worldCitiesByPopulationLS() {
+        return null;
+    }
+
+    /**
+     * All the cities in a continent organised by largest population to smallest.
+     *
+     * @return
+     */
+    public ArrayList<City> continentCitiesByPopulationLS() {
+        return null;
+    }
+
+    /**
+     * All the cities in a region organised by largest population to smallest.
+     *
+     * @return
+     */
+    public ArrayList<City> regionCitiesByPopulationLS() {
+        return null;
+    }
+
+    /**
+     * All the cities in a country organised by largest population to smallest.
+     *
+     * @return
+     */
+    public ArrayList<City> countryCitiesByPopulationLS() {
+        return null;
+    }
+
+    /**
+     * All the cities in a district organised by largest population to smallest.
+     *
+     * @return
+     */
+    public ArrayList<City> districtCitiesByPopulationLS() {
+        return null;
+    }
+
+    /**
+     * The top N populated cities in the world where N is provided by the user.
+     *
+     * @return
+     */
+    public ArrayList<City> worldCitiesTopN(int n) {
+        return null;
+    }
+
+    /**
+     * The top N populated cities in a continent where N is provided by the user.
+     *
+     * @return
+     */
+    public ArrayList<City> continentCitiesTopN(int n) {
+        return null;
+    }
+
+    /**
+     * The top N populated cities in a region where N is provided by the user.
+     *
+     * @return
+     */
+    public ArrayList<City> regionCitiesTopN(int n) {
+        return null;
+    }
+
+    /**
+     * The top N populated cities in a country where N is provided by the user.
+     *
+     * @return
+     */
+    public ArrayList<City> countryCitiesTopN(int n) {
+        return null;
+    }
+
+    /**
+     * The top N populated cities in a district where N is provided by the user.
+     *
+     * @return
+     */
+    public ArrayList<City> districtCitiesTopN(int n) {
+        return null;
+    }
+
+    /**
+     * All the capital cities in the world organised by largest population to smallest.
+     *
+     * @return
+     */
+    public ArrayList<City> worldCapitalsByPopulationLS() {
+        return null;
+    }
+
+    /**
+     * All the capital cities in a continent organised by largest population to smallest.
+     *
+     * @return
+     */
+    public ArrayList<City> continentCapitalsByPopulationLS() {
+        return null;
+    }
+
+    /**
+     * All the capital cities in a region organised by largest to smallest.
+     *
+     * @return
+     */
+    public ArrayList<City> regionCapitalsByPopulationLS() {
+        return null;
+    }
+
+    /**
+     * The top N populated capital cities in the world where N is provided by the user.
+     *
+     * @return
+     */
+    public ArrayList<City> worldCapitalsTopN(int n) {
+        return null;
+    }
+
+    /**
+     * The top N populated capital cities in a continent where N is provided by the user.
+     *
+     * @return
+     */
+    public ArrayList<City> continentCapitalsTopN(int n) {
+        return null;
+    }
+
+    /**
+     * The top N populated capital cities in a region where N is provided by the user.
+     *
+     * @return
+     */
+    public ArrayList<City> regionCapitalsTopN(int n) {
+        return null;
+    }
+
+    /**
+     * The population of people, people living in cities, and people not living in cities in each continent.
+     *
+     * @return
+     */
+    public ArrayList<City> continentPopulationCitiesandRural() {
+        return null;
+    }
+
+    /**
+     * The population of people, people living in cities, and people not living in cities in each region.
+     *
+     * @return
+     */
+    public ArrayList<City> regionPopulationCitiesandRural() {
+        return null;
+    }
+
+    /**
+     * The population of people, people living in cities, and people not living in cities in each country.
+     *
+     * @return
+     */
+    public ArrayList<City> countryPopulationCitiesandRural() {
+        return null;
     }
 }
