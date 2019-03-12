@@ -78,13 +78,15 @@ public class App {
             ArrayList<Country> worldCountries = this.worldCountriesByPopulationLS();
             this.printCountries(worldCountries);
         } else if (i == 2) {
+            System.out.println("Select a continent:");
+            String continent = input.next();
             System.out.println("All the countries in a continent organised by largest population to smallest:\n");
-            String continent = "Asia";
             ArrayList<Country> continentCountries = this.continentCountriesByPopulationLS(continent);
             this.printCountries(continentCountries);
         } else if (i == 3) {
+            System.out.println("Select a region:");
+            String region = input.next();
             System.out.println("All the countries in a region organised by largest population to smallest.\n:\n");
-            String region = "Middle East";
             ArrayList<Country> regionCountries = this.regionCountriesByPopulationLS(region);
             this.printCountries(regionCountries);
         }
