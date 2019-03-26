@@ -77,24 +77,23 @@ public class App {
 
         if (i == 1) {
             System.out.println("All countries by population from largest to smallest:\n");
-            this.printReportViews(this.worldCountriesByPopulationLS());
+            printReportViews(worldCountriesByPopulationLS());
         } else if (i == 2) {
             System.out.println("Select a continent:");
             String continent = input.next();
             System.out.println("All the countries in a continent organised by largest population to smallest:\n");
-            ArrayList<Country> continentCountries = this.continentCountriesByPopulationLS(continent);
+            ArrayList<Country> continentCountries = continentCountriesByPopulationLS(continent);
             this.printCountries(continentCountries);
         } else if (i == 3) {
             System.out.println("Select a region:");
             String region = input.next();
             System.out.println("All the countries in a region organised by largest population to smallest.\n:\n");
-            ArrayList<Country> regionCountries = this.regionCountriesByPopulationLS(region);
+            ArrayList<Country> regionCountries = regionCountriesByPopulationLS(region);
             this.printCountries(regionCountries);
         } else if (i == 37) {
             System.out.println("Enter a capital city name:");
             String choice = input.next();
-            CapitalCityReport(choice);
-
+            printReportViews(CapitalCityReport(choice));
         }
     }
 
@@ -487,25 +486,26 @@ public class App {
      * Capital City report
      * Prints the capital city details such as name, continent, and population.
      */
-    public void CapitalCityReport(String cityName) {
+    public ArrayList<ReportView> CapitalCityReport(String cityName) {
 
         try {
-            String query = "SELECT cities.name, cities.Population, country.Name "+
-                    "FROM country " +
-                    "JOIN city as cities ON cities.ID = country.Capital " +
+            String query = "SELECT cities.name as Name, cities.Population as Population, country.Name as Country\n"+
+                    "FROM country \n" +
+                    "JOIN city as cities ON cities.ID = country.Capital \n" +
                     "WHERE cities.name LIKE '" + cityName + "'";
 
             ResultSet results = db.query(query);
-            results.next();
-            System.out.println(String.format("%-10s %-15s %-20s", "Name", "Country Name", "Population"));
-            String formatted_string =
-                    String.format("%-10s %-15s %-20s",
-                            results.getString("Name"),results.getString("country.Name"), results.getString("Population"));
-            System.out.println(formatted_string);
+            ArrayList<ReportView> views = new ArrayList<>();
+            while (results.next()) {
+                CapitalCityReportView view = new CapitalCityReportView(results);
+                views.add(view);
+            }
+            return views;
         }
         catch(Exception e){
             System.out.println("No City Found");
             System.out.println(e.getMessage());
+            return null;
         }
     }
 
