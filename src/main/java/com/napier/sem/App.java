@@ -76,8 +76,7 @@ public class App {
 
         if (i == 1) {
             System.out.println("All countries by population from largest to smallest:\n");
-            ArrayList<Country> worldCountries = this.worldCountriesByPopulationLS();
-            this.printCountries(worldCountries);
+            this.printReportViews(this.worldCountriesByPopulationLS());
         } else if (i == 2) {
             System.out.println("Select a continent:");
             String continent = input.next();
@@ -109,6 +108,26 @@ public class App {
                         String.format("%-10s %-15s %-20s",
                                 country.Name, country.Continent, country.Population);
                 System.out.println(formatted_string);
+            }
+        } else {
+            System.out.println("No countries");
+        }
+    }
+
+    /**
+     * Prints report view.
+     *
+     * @param views report views to print.
+     */
+    void printReportViews(ArrayList<ReportView> views) {
+        if (views != null) {
+            System.out.println(views.get(0).getHeader());
+            for (ReportView view : views) {
+                if (view == null) {
+                    continue;
+                }
+
+                System.out.println(view);
             }
         } else {
             System.out.println("No countries");
@@ -174,20 +193,19 @@ public class App {
      *
      * @return countries
      */
-    ArrayList<Country> worldCountriesByPopulationLS() {
+    ArrayList<ReportView> worldCountriesByPopulationLS() {
         try {
-            String query = "SELECT Name, Continent, Population FROM country";
+            String query =  "SELECT c.Code, c.Name, c.Continent, c.Region, c.Population, capitalCity.Name AS Capital FROM country c\n" +
+                            "JOIN city capitalCity ON capitalCity.ID = c.Capital\n" +
+                            "ORDER BY population DESC;";
 
             ResultSet results = db.query(query);
-            ArrayList<Country> countries = new ArrayList<>();
+            ArrayList<ReportView> views = new ArrayList<>();
             while (results.next()) {
-                Country country = new Country();
-                country.Continent = results.getString("Continent");
-                country.Name = results.getString("Name");
-                country.Population = results.getInt("Population");
-                countries.add(country);
+                CountryReportView view = new CountryReportView(results);
+                views.add(view);
             }
-            return countries;
+            return views;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to fetch country");
