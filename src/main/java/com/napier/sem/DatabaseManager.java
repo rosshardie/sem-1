@@ -29,7 +29,6 @@ class DatabaseManager {
             System.out.println("Connecting to database...");
             try {
                 // Wait a bit for db to start
-                Thread.sleep(30000);
                 // Connect to database
                 con = DriverManager.getConnection("jdbc:mysql://" + location + "/world?allowPublicKeyRetrieval=true&useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
@@ -37,6 +36,10 @@ class DatabaseManager {
             } catch (SQLException sqle) {
                 System.out.println("Failed to connect to database attempt " + i);
                 System.out.println(sqle.getMessage());
+            }
+
+            try {
+                Thread.sleep(5000);
             } catch (InterruptedException ie) {
                 System.out.println("Thread interrupted? Should not happen.");
             }

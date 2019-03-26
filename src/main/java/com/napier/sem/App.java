@@ -5,6 +5,7 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class App {
+    static DatabaseManager db;
 
     /**
      * Connect to database and run report.
@@ -12,7 +13,7 @@ public class App {
      * @param args string
      */
     public static void main(String[] args) {
-        DatabaseManager db = new DatabaseManager();
+        db = new DatabaseManager();
         App a = new App();
 
         // Connect to DB
@@ -175,14 +176,13 @@ public class App {
      */
     ArrayList<Country> worldCountriesByPopulationLS() {
         try {
-            DatabaseManager db = new DatabaseManager();
-            String query = "SELECT Name FROM country";
+            String query = "SELECT Name, Continent, Population FROM country";
 
             ResultSet results = db.query(query);
-            ArrayList<Country> countries = new ArrayList<Country>();
+            ArrayList<Country> countries = new ArrayList<>();
             while (results.next()) {
                 Country country = new Country();
-                country.Code = results.getString("Code");
+                country.Continent = results.getString("Continent");
                 country.Name = results.getString("Name");
                 country.Population = results.getInt("Population");
                 countries.add(country);
@@ -202,9 +202,8 @@ public class App {
      */
     ArrayList<Country> continentCountriesByPopulationLS(String continent) {
         try {
-            DatabaseManager db = new DatabaseManager();
             String[] continents = new String[]{"Asia", "Europe", "North America", "Africa", "Oceania", "Antarctica", "South America"};
-            ArrayList<Country> countries = new ArrayList<Country>();
+            ArrayList<Country> countries = new ArrayList<>();
             for (String cont : continents) {
                 String query =
                         "SELECT Name, Continent, Population "
@@ -236,8 +235,7 @@ public class App {
      */
     ArrayList<Country> regionCountriesByPopulationLS(String region) {
         try {
-            DatabaseManager db = new DatabaseManager();
-            ArrayList<Country> countries = new ArrayList<Country>();
+            ArrayList<Country> countries = new ArrayList<>();
             String query =
                     "SELECT Name, Continent, Population "
                             + "FROM country "
