@@ -82,8 +82,7 @@ public class App {
             System.out.println("Select a continent:");
             String continent = input.next();
             System.out.println("All the countries in a continent organised by largest population to smallest:\n");
-            ArrayList<Country> continentCountries = continentCountriesByPopulationLS(continent);
-            this.printCountries(continentCountries);
+            printReportViews(continentCountriesByPopulationLS(continent));
         } else if (i == 3) {
             System.out.println("Select a region:");
             String region = input.next();
@@ -223,27 +222,20 @@ public class App {
      *
      * @return countries
      */
-    ArrayList<Country> continentCountriesByPopulationLS(String continent) {
+    ArrayList<ReportView> continentCountriesByPopulationLS(String continent) {
         try {
-            String[] continents = new String[]{"Asia", "Europe", "North America", "Africa", "Oceania", "Antarctica", "South America"};
-            ArrayList<Country> countries = new ArrayList<>();
-            for (String cont : continents) {
-                String query =
-                        "SELECT Name, Continent, Population "
-                                + "FROM country "
-                                + "WHERE Continent = '" + continent + "' "
-                                + "ORDER BY Population DESC  ";
-                ResultSet results = db.query(query);
-                while (results.next()) {
-                    Country country = new Country();
-                    country.Code = results.getString("Code");
-                    country.Name = results.getString("Name");
-                    country.Continent = results.getString("Continent");
-                    country.Population = results.getInt("Population");
-                    countries.add(country);
-                }
+            String query =  "SELECT c.Code, c.Name, c.Continent, c.Region, c.Population, capitalCity.Name AS Capital FROM country c\n" +
+                    "JOIN city capitalCity ON capitalCity.ID = c.Capital\n" +
+                    "WHERE c.Continent = '" + continent + "' \n" +
+                    "ORDER BY population DESC;";
+
+            ResultSet results = db.query(query);
+            ArrayList<ReportView> views = new ArrayList<>();
+            while (results.next()) {
+                CountryReportView view = new CountryReportView(results);
+                views.add(view);
             }
-            return countries;
+            return views;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to fetch country");
