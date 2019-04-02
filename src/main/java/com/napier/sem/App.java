@@ -72,6 +72,9 @@ public class App {
             System.out.println("35 Spanish.\n");
             System.out.println("36 Arabic.\n");
             System.out.println("37 Get Capital City.\n");
+            System.out.println("38 Get top number of populated capital cities in the world where the number is provided by you\n");
+            System.out.println("39 Get all capital cities in the world\n");
+
 
         Scanner input = new Scanner(System.in);
         int i;
@@ -115,6 +118,16 @@ public class App {
                     System.out.println("Enter a capital city name:");
                     String choice = input.next();
                     printReportViews(CapitalCityReport(choice));
+                    break;
+
+                case 38:
+                    System.out.println("provide the top number of capital cities you wish to view:");
+                    choice = input.next();
+                    printReportViews(TopCapitalCityReport38(choice));
+                    break;
+
+                case 39:
+                    printReportViews(TopCapitalCityReport29());
                     break;
 
                 default:
@@ -522,6 +535,55 @@ public class App {
         }
         catch(Exception e){
             System.out.println("No City Found");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public ArrayList<ReportView> TopCapitalCityReport38(String topNumber) {
+        try {
+            String query = "SELECT t1.name AS 'Country', t2.name AS 'Name', t2.population AS 'Population' "+
+            "FROM(select country.Name, country.capital FROM country) as t1, "+
+            "(select city.name, city.population, city.ID FROM city) as t2 " +
+            "where t1.capital = t2.id " +
+            "order by t2.population DESC "+
+            "LIMIT " +  topNumber + ";";
+
+            ResultSet results = db.query(query);
+
+            ArrayList<ReportView> views = new ArrayList<>();
+            while (results.next()) {
+                CapitalCityReportView view = new CapitalCityReportView(results);
+                views.add(view);
+            }
+            return views;
+        }
+        catch(Exception e){
+            System.out.println("No data Found");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public ArrayList<ReportView> TopCapitalCityReport29() {
+        try {
+            String query = "SELECT "+
+                    "t1.name AS 'Country', t2.name AS 'Name', t2.population AS 'Population' "+
+                    "FROM (select country.Name, country.capital FROM country) AS t1, "+
+                    "(select city.name, city.population, city.ID FROM city) AS t2 "+
+                    "WHERE t1.capital = t2.id order by t2.population DESC; ";
+
+            ResultSet results = db.query(query);
+
+            ArrayList<ReportView> views = new ArrayList<>();
+            while (results.next()) {
+                CapitalCityReportView view = new CapitalCityReportView(results);
+                views.add(view);
+            }
+            return views;
+        }
+        catch(Exception e){
+            System.out.println("No data Found");
             System.out.println(e.getMessage());
             return null;
         }
