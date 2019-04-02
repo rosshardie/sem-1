@@ -34,6 +34,7 @@ public class App {
      */
     private void menu() {
             System.out.println("Select a function:");
+            System.out.println("0 Exit the application.\n");
             System.out.println("1 All the countries in the world organised by largest population to smallest.\n");
             System.out.println("2 All the countries in a continent organised by largest population to smallest.\n");
             System.out.println("3 All the countries in a region organised by largest population to smallest.\n");
@@ -73,26 +74,57 @@ public class App {
             System.out.println("37 Get Capital City.\n");
 
         Scanner input = new Scanner(System.in);
-        int i = input.nextInt();
+        int i;
 
-        if (i == 1) {
-            System.out.println("All countries by population from largest to smallest:\n");
-            printReportViews(worldCountriesByPopulationLS());
-        } else if (i == 2) {
-            System.out.println("Select a continent:");
-            String continent = input.next();
-            System.out.println("All the countries in a continent organised by largest population to smallest:\n");
-            printReportViews(continentCountriesByPopulationLS(continent));
-        } else if (i == 3) {
-            System.out.println("Select a region:");
-            String region = input.next();
-            System.out.println("All the countries in a region organised by largest population to smallest:\n");
-            printReportViews(regionCountriesByPopulationLS(region));
-        } else if (i == 37) {
-            System.out.println("Enter a capital city name:");
-            String choice = input.next();
-            printReportViews(CapitalCityReport(choice));
-        }
+        do {
+            try {
+                i = input.nextInt();
+            } catch (java.util.InputMismatchException e) {
+                // Clear input by taking line
+                input.next();
+
+                // Force default case
+                i = -1;
+            }
+
+            switch (i) {
+                case 0:
+                    // Do nothing
+                    break;
+
+                case 1:
+                    System.out.println("All countries by population from largest to smallest:\n");
+                    printReportViews(worldCountriesByPopulationLS());
+                    break;
+
+                case 2:
+                    System.out.println("Select a continent:");
+                    String continent = input.next();
+                    System.out.println("All the countries in a continent organised by largest population to smallest:\n");
+                    printReportViews(continentCountriesByPopulationLS(continent));
+                    break;
+
+                case 3:
+                    System.out.println("Select a region:");
+                    String region = input.next();
+                    System.out.println("All the countries in a region organised by largest population to smallest:\n");
+                    printReportViews(regionCountriesByPopulationLS(region));
+                    break;
+
+                case 37:
+                    System.out.println("Enter a capital city name:");
+                    String choice = input.next();
+                    printReportViews(CapitalCityReport(choice));
+                    break;
+
+                default:
+                    System.out.println("An invalid choice was selected. Please try again.");
+            }
+
+            System.out.println("\nChoose another function, or 0 to exit");
+        } while (i != 0);
+
+        System.out.println("Application has exited");
     }
 
     /**
