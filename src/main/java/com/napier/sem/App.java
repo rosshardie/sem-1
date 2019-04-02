@@ -123,7 +123,7 @@ public class App {
      * @param views report views to print.
      */
     void printReportViews(ArrayList<ReportView> views) {
-        if (views != null) {
+        if (views != null && !views.isEmpty()) {
             System.out.println(views.get(0).getHeader());
             for (ReportView view : views) {
                 if (view == null) {
@@ -133,7 +133,7 @@ public class App {
                 System.out.println(view);
             }
         } else {
-            System.out.println("No countries");
+            System.out.println("No data returned");
         }
     }
 
