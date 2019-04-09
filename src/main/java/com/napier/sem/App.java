@@ -1,7 +1,7 @@
 package com.napier.sem;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.sql.*;
 import java.util.Scanner;
 
 public class App {
@@ -154,7 +154,7 @@ public class App {
 
                 case 38:
                     System.out.println("provide the top number of capital cities you wish to view:");
-                    choice = input.next();
+                    String choice = input.next();
                     printReportViews(TopCapitalCityReport38(choice));
                     break;
 
