@@ -74,7 +74,7 @@ public class App {
             System.out.println("37 Get Capital City.\n");
             System.out.println("38 Get top number of populated capital cities in the world where the number is provided by you\n");
             System.out.println("39 Get all capital cities in the world\n");
-
+            System.out.println("40 Get all capital cities in a given continent\n");
 
         Scanner input = new Scanner(System.in);
         int i;
@@ -160,6 +160,12 @@ public class App {
 
                 case 39:
                     printReportViews(TopCapitalCityReport29());
+                    break;
+
+                case 40:
+                    System.out.println("provide the name of the continent you wish to see all capital cities in:");
+                    String cont = input.next();
+                    printReportViews(CapitalCityContinent(cont));
                     break;
 
                 default:
@@ -674,5 +680,37 @@ public class App {
             return null;
         }
     }
+
+
+    public ArrayList<ReportView> CapitalCityContinent(String cont) {
+        try {
+            String query = "SELECT "+
+                    "t1.Continent AS 'Continent', "+
+                    "t1.name AS 'Country', "+
+                    "t2.name AS 'Name', "+
+                    "t2.population "+
+                    "FROM "+
+                    "(select country.Name, country.Continent, country.capital FROM country) as t1, "+
+                    "(select city.name, city.population, city.ID FROM city) as t2 "+
+                    "where t1.capital = t2.id AND t1.Continent = 'Europe' "+
+                    "order by t2.population DESC;";
+
+            ResultSet results = db.query(query);
+
+            ArrayList<ReportView> views = new ArrayList<>();
+            while (results.next()) {
+                CapitalCityReportView view = new CapitalCityReportView(results);
+                views.add(view);
+            }
+            System.out.println("The continent you chose is " + cont);
+            return views;
+        }
+        catch(Exception e){
+            System.out.println("No data Found");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
 
 }
