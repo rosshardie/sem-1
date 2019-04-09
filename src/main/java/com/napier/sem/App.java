@@ -74,7 +74,7 @@ public class App {
             System.out.println("37 Get Capital City.\n");
             System.out.println("38 Get top number of populated capital cities in the world where the number is provided by you\n");
             System.out.println("39 Get all capital cities in the world\n");
-
+            System.out.println("41 Get a limited number of capital cities in a provided continent\n");
 
         Scanner input = new Scanner(System.in);
         int i;
@@ -162,6 +162,14 @@ public class App {
                     printReportViews(TopCapitalCityReport29());
                     break;
 
+                case 41:
+                    System.out.println("Enter a continent you wish to view:");
+                    String choice2 = input.next();
+                    System.out.println("provide the top number of capital cities you wish to view:");
+                    Integer limit = Integer.parseInt(input.next());
+                    printReportViews(CapitalCityContinentLimited(choice2, limit));
+                    break;
+                    
                 default:
                     System.out.println("An invalid choice was selected. Please try again.");
             }
@@ -666,6 +674,37 @@ public class App {
                 CapitalCityReportView view = new CapitalCityReportView(results);
                 views.add(view);
             }
+            return views;
+        }
+        catch(Exception e){
+            System.out.println("No data Found");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+
+    public ArrayList<ReportView> CapitalCityContinentLimited(String cont, Integer limit) {
+        try {
+
+            String query = "SELECT "+
+                    "t2.name, "+
+                    "t2.population, "+
+                    "t1.name AS 'Country' "+
+                    "FROM (select country.Name, country.Continent, country.capital FROM country) as t1, "+
+                    "(select city.name, city.population, city.ID FROM city) as t2 "+
+                    "where t1.capital = t2.id AND t1.Continent = '" + cont +"' "+
+                    "order by t2.population DESC "+
+                    "LIMIT " + limit + ";";
+
+            ResultSet results = db.query(query);
+
+            ArrayList<ReportView> views = new ArrayList<>();
+            while (results.next()) {
+                CapitalCityReportView view = new CapitalCityReportView(results);
+                views.add(view);
+            }
+            System.out.println("You are searching for the top " + limit + " Capital cities in the continent " + cont);
             return views;
         }
         catch(Exception e){
